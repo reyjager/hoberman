@@ -1,0 +1,259 @@
+@import "bootstrap";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+@import "./variables";
+// @import "./variables";
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open-Sans", "Arial", "Helvetica", "sans-serif", "Arial";
+    background-color: $main-bg;
+}
+
+@mixin profile-avatar {
+    background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1609106/headshot.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    border: 2px solid $main-bg;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    grid-template-rows: 100vh;
+}
+.grid-header {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 1fr;
+}
+
+.sidebar {
+    background-color: $color-primary;
+    color: white;
+    padding: 0;
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+
+    &__nav {
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        padding: 0;
+        margin: 0;
+        min-height: 0;
+        max-height: 100%;
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+    }
+
+    &__menu {
+        display: flex;
+        flex-direction: column;
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+    }
+
+    &__menuItem {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+        padding-left: 20px;
+        height: 60px;
+
+        i {
+            width: 20px;
+        }
+
+        a {
+            font-size: 18px;
+        }
+
+        &.active {
+            background-color: rgba($color-hover, 0.5);
+        }
+
+        &:hover {
+            background-color: $color-hover;
+        }
+    }
+
+    &__subMenu {
+        background-color: $color-primary;
+        transition: scale(0);
+        transform-origin: top;
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: transition 0.3s ease-in-out, transition 0.3s ease-in-out,
+            max-height 0.3s ease-in-out;
+
+        //
+        //
+        &-visible {
+            background-color: $color-secondary;
+            max-height: 100%;
+            transform: scale(1);
+            opacity: 1;
+            overflow: hidden;
+        }
+
+        &-hidden {
+            transform: scale();
+            max-height: 0;
+        }
+    }
+
+    &__subItem {
+        display: flex;
+        align-items: center;
+        font-size: 0.9rem;
+        color: #ecf0f1;
+        // max-height: 100px;
+        height: 40px;
+        transition: all 0.3s ease-in-out;
+
+        &.active {
+            color: $color-hover;
+            ::after {
+                content: "";
+                color: green;
+            }
+        }
+
+        &:hover {
+            color: white;
+            background-color: $color-hover;
+        }
+
+        a {
+            padding-left: 55px;
+        }
+    }
+
+    &__brand {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: $height-header;
+        gap: 0.75rem;
+        padding: 0;
+        margin: 0 auto;
+        text-align: center;
+        line-height: $height-header;
+
+        &-icon {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        &-text {
+            color: $color-white;
+        }
+        a {
+            text-decoration: none;
+        }
+    }
+
+    &__profile {
+        display: flex;
+        align-items: center;
+        min-height: 90px;
+        background-color: $color-secondary;
+
+        &-avatar {
+            @include profile-avatar;
+            height: 64px;
+            width: 64px;
+            margin: 0 15px;
+        }
+    }
+
+    &__footer {
+        padding: 1rem;
+        margin: 0;
+        color: rgba($color: $main-bg, $alpha: 0.8);
+        height: $height-footer;
+        background-color: rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+    }
+}
+.content {
+    background: $main-bg;
+    overflow-y: auto;
+    display: grid;
+    width: 100%;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+    margin-top: $height-header; // Adds margin to prevent overlap with the fixed header
+}
+
+.mainHeader {
+    height: $height-header;
+    background-color: $color-white;
+    width: calc(100vw - 350px); // Adjusts width to account for the sidebar
+    display: flex;
+    align-items: center;
+    justify-content: space-between; // Adjusts content alignment within the header
+    padding: 0 1rem; // Adds horizontal padding for spacing
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Adds a subtle shadow for visual separation
+    position: fixed; // Keeps the header fixed at the top
+    top: 0;
+    left: 350px; // Positions the header to the right of the sidebar
+    z-index: 1000; // Ensures the header stays above other elements
+}
+
+::-webkit-scrollbar {
+    background-color: transparent;
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: red;
+    border-radius: 5px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 1rem;
+    padding: 2px;
+    background-color: red;
+    width: 50%;
+
+    i {
+        margin: auto;
+        background-color: yellow;
+        padding: 10px;
+        border-radius: 50%;
+    }
+}
+.header__search {
+    width: auto;
+}
+
+.header__avatar {
+    @include profile-avatar;
+    height: 30px;
+    width: 30px;
+    margin: 0 15px;
+}
