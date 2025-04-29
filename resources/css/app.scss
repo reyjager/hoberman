@@ -10,7 +10,7 @@ body {
     padding: 0;
     box-sizing: border-box;
     font-family: "Open-Sans", "Arial", "Helvetica", "sans-serif", "Arial";
-    background-color: $main-bg;
+    background-color: rgba($main-bg, 0.2);
 }
 
 @mixin profile-avatar {
@@ -23,13 +23,18 @@ body {
 
 .grid-container {
     display: grid;
-    grid-template-columns: 350px 1fr;
+    grid-template-columns: $width-sidenav 1fr;
     grid-template-rows: 100vh;
+
+    &.collapsed {
+        grid-template-columns: $width-sidenav2 1fr;
+        transition: all 0.3s ease-in-out;
+    }
 }
 .grid-header {
     display: grid;
     grid-template-columns: auto auto;
-    grid-template-rows: 1fr;
+    grid-template-rows: 100%;
 }
 
 .sidebar {
@@ -74,9 +79,9 @@ body {
         align-items: center;
         gap: 10px;
         cursor: pointer;
-        transition: background-color 0.2s ease-in-out;
+        transition: background-color 0.3s ease-in-out;
         padding-left: 20px;
-        height: 60px;
+        height: 50px;
 
         i {
             width: 20px;
@@ -105,8 +110,6 @@ body {
         transition: transition 0.3s ease-in-out, transition 0.3s ease-in-out,
             max-height 0.3s ease-in-out;
 
-        //
-        //
         &-visible {
             background-color: $color-secondary;
             max-height: 100%;
@@ -126,7 +129,6 @@ body {
         align-items: center;
         font-size: 0.9rem;
         color: #ecf0f1;
-        // max-height: 100px;
         height: 40px;
         transition: all 0.3s ease-in-out;
 
@@ -195,65 +197,180 @@ body {
         display: flex;
         align-items: center;
     }
-}
-.content {
-    background: $main-bg;
-    overflow-y: auto;
-    display: grid;
-    width: 100%;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto 1fr;
-    margin-top: $height-header; // Adds margin to prevent overlap with the fixed header
-}
 
+    &.collapsed {
+        width: $width-sidenav2;
+
+        .sidebar__brand-text,
+        .sidebar__profile-title,
+        .sidebar__subItem a {
+            display: none;
+        }
+
+        .sidebar__menuItem {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            height: 70px;
+            gap: 0;
+
+            i {
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            a {
+                display: block;
+                text-align: center;
+                font-size: 12px;
+            }
+        }
+
+        .sidebar__profile {
+            justify-content: center;
+            padding: 0;
+
+            &-avatar {
+                margin: 0 auto;
+            }
+        }
+
+        .sidebar__subMenu {
+            display: none;
+        }
+    }
+}
 .mainHeader {
     height: $height-header;
     background-color: $color-white;
-    width: calc(100vw - 350px); // Adjusts width to account for the sidebar
+    width: calc(100vw - 300px);
     display: flex;
     align-items: center;
-    justify-content: space-between; // Adjusts content alignment within the header
-    padding: 0 1rem; // Adds horizontal padding for spacing
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Adds a subtle shadow for visual separation
-    position: fixed; // Keeps the header fixed at the top
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
     top: 0;
-    left: 350px; // Positions the header to the right of the sidebar
-    z-index: 1000; // Ensures the header stays above other elements
+    z-index: 1000;
+
+    &__left {
+        display: flex;
+        align-items: center;
+    }
+
+    &__right {
+        display: flex;
+        align-items: center;
+        width: 100vw;
+        justify-content: right;
+        padding-right: 10px;
+    }
+    i {
+        margin: 0 15px;
+    }
+
+    &__search {
+        width: 500px;
+        border-radius: 15px;
+        border-color: $color-primary;
+        color: $color-primary;
+        padding-left: 15px;
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+
+        &__input {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            font-size: 12px;
+            color: $color-primary;
+            padding: 8px 12px;
+        }
+    }
+
+    &__avatar {
+        display: flex;
+        @include profile-avatar;
+        height: 40px;
+        width: 40px;
+        margin: 0 5px;
+        background-color: #ccc;
+        border-radius: 50%;
+    }
+
+    &::placeholder {
+        color: $color-primary;
+        font-size: 14px;
+        opacity: 1;
+    }
+
+    &.collapsed {
+        width: calc(100vw - 100px);
+        left: $width-sidenav2;
+        transition: all 0.3s ease-in-out;
+    }
+}
+
+.dropdown {
+    position: relative;
+    padding-top: 5px;
+    margin-top: 5px;
+
+    ul {
+        display: none;
+        position: absolute;
+        right: 0;
+        background: white;
+        list-style: none;
+        padding: 10px;
+        margin-top: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    i {
+        margin: 5px;
+    }
+
+    &-show ul {
+        display: block;
+        transition: scale(1);
+    }
+    &-header,
+    &-item {
+        height: 45px;
+        width: 200px;
+    }
+    &-divider {
+        border-color: grey;
+        box-shadow: inset;
+    }
+    &-header h6 {
+        margin: 5px 5px 0 5px;
+    }
+    &-header span {
+        font-size: 10px;
+        color: green;
+        margin: 5px 5px 0 5px;
+    }
+
+    &-item:hover {
+        background-color: $color-hover;
+        color: white;
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
 }
 
 ::-webkit-scrollbar {
     background-color: transparent;
-    width: 10px;
+    width: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: red;
-    border-radius: 5px;
+    background-color: rgba($main-bg, 0.2);
+    border-radius: 7px;
 }
 
-.header-left {
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    gap: 1rem;
-    padding: 2px;
-    background-color: red;
-    width: 50%;
-
-    i {
-        margin: auto;
-        background-color: yellow;
-        padding: 10px;
-        border-radius: 50%;
-    }
-}
-.header__search {
-    width: auto;
-}
-
-.header__avatar {
-    @include profile-avatar;
-    height: 30px;
-    width: 30px;
-    margin: 0 15px;
+.content {
+    width: 100vw;
 }

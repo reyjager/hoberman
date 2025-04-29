@@ -1,90 +1,50 @@
 
-<style>
-    /* body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-    }
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background-color: #0d6efd;
-      padding: 10px 20px;
-      color: white;
-    } */
-    /* .left, .center, .right {
-      display: flex;
-      align-items: center;
-    } */
-    /* .close-icon {
-      font-size: 24px;
-      cursor: pointer;
-    } */
-    /* .search-bar input {
-      padding: 5px;
-      border-radius: 4px;
-      border: none;
-      outline: none;
-    } */
-    /* .profile {
-      position: relative;
-      margin-left: 20px;
-      cursor: pointer;
-    } */
-    .dropdown {
-      display: none;
-      position: absolute;
-      top: 40px;
-      right: 0;
-      background-color: white;
-      color: black;
-      min-width: 120px;
-      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-      z-index: 1;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .dropdown a {
-      padding: 10px;
-      display: block;
-      text-decoration: none;
-      color: black;
-    }
-    .dropdown a:hover {
-      background-color: #ddd;
-    }
-    .profile:hover .dropdown {
-      display: block;
-    }
-  </style>
+    <div class="mainHeader__left">
+        <i class="fas fa-bars"></i>
+        <div class="mainHeader__search">
+            <input class="mainHeader__search__input" placeholder="Search..." />
+        </div>
+    </div>
 
-<header class="mainHeader">
-
-    <div class="header-left">
-        <i class="fas fa-bars header__menu"></i>
-    <div class="header__search">
-      <input class="header__input" placeholder="Search..." />
-    </div>
-    </div>
-    
-    <div class="header-right">
-        <div class="header__avatar">
-            <div class="dropdown">
-              <ul class="dropdown__list">
-                <li class="dropdown__list-item">
-                  <span class="dropdown__icon"><i class="far fa-user"></i></span>
-                  <span class="dropdown__title">my profile</span>
+    <div class="mainHeader__right">
+        <div class="mainHeader__avatar"></div>
+        <div class="dropdown">
+            <i class="fas fa-caret-down"></i>
+            <ul>
+                <li class="dropdown-header">
+                    <h6>Name</h6>
+                    <span>Web/Mobile Developer</span>
                 </li>
-                <li class="dropdown__list-item">
-                  <span class="dropdown__icon"><i class="fas fa-clipboard-list"></i></span>
-                  <span class="dropdown__title">my account</span>
+                <li>
+                    <hr class="dropdown-divider">
                 </li>
-                <li class="dropdown__list-item">
-                  <span class="dropdown__icon"><i class="fas fa-sign-out-alt"></i></span>
-                  <span class="dropdown__title">log out</span>
+                <li class="dropdown-item-hover">
+                    <a class="dropdown-item d-flex align-items-center" href="">
+                        <i class="bi bi-person pe-2"></i>
+                        <span>My Profile</span>
+                    </a>
                 </li>
-              </ul>
-            </div>
-          </div>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li class="dropdown-item-hover">
+                    <a class="dropdown-item d-flex align-items-center" href="">
+                        <i class="bi bi-gear pe-2"></i>
+                        <span>Account Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li class="dropdown-item-hover">
+                    <form action="" method="POST">
+                        @csrf
+                        <button type="submit" class="dropdown-item d-flex align-items-center">
+                            <i class="bi bi-box-arrow-right pe-2"></i>
+                            <span>Sign Out</span>
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
     </div>
-  </header>

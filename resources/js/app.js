@@ -55,3 +55,31 @@ subItems.forEach(item => {
         this.classList.add('active');
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const caretIcon = document.querySelector('.mainHeader__right .fa-caret-down');
+    const dropdown = document.querySelector('.mainHeader__right .dropdown');
+
+    caretIcon.addEventListener('click', function () {
+        dropdown.classList.toggle('dropdown-show');
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the hamburger menu button (you'll need to add this to your HTML)
+    const hamburger = document.querySelector('.fa-bars');
+    
+    // Get the sidebar element
+    const sidebar = document.querySelector('.sidebar');
+    const gridContent = document.querySelector('.grid-container');
+    const mainHeader = document.querySelector('.mainHeader');
+    
+    // Add click event to hamburger menu
+    hamburger.addEventListener('click', function() {
+        // Toggle collapsed class on sidebar
+        sidebar.classList.toggle('collapsed');
+        gridContent.classList.toggle('collapsed');
+        mainHeader.classList.toggle('collapsed');
+    });
+});
